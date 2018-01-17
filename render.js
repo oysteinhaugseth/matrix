@@ -20,13 +20,13 @@ function setup() {
     let stream = new Stream();
     stream.generateMatrices(x, random(-1000, 0));
     streams.push(stream);
-    x += matrixSize + 5;
+    x += matrixSize + 25;
   }
   textSize(matrixSize);
 }
 
 function draw() {
-  background(34, 35, 42, 150);
+  background(34, 35, 42);
   streams.forEach(function(stream) {
     stream.render();
   });
@@ -47,7 +47,7 @@ function Matrix(x, y, speed, first) {
     if (frameCount % this.switchInterval == 0) {
       this.value = String.fromCharCode(
         // choose random Katakana from of total of 96
-        0x30A0 + round(random(0, 96))
+        round(random(60, 96))
       );
     }
   };
@@ -84,10 +84,10 @@ function Stream() {
     this.Matrices.forEach(function(matrix) {
       if (matrix.first) {
         // color for bright first color
-        fill(166, 255, 198);
+        fill(200);
       } else {
         // color of characters
-        fill(166, 255, 198);
+        fill(150);
       }
       // function to randomly display characters from this.value at x and y coordinates
       text(matrix.value, matrix.x, matrix.y);
