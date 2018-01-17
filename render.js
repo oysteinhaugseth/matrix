@@ -4,29 +4,30 @@
 
 
 // set size of characters
-let matrixSize = 15;
+let matrixSize = 10;
 // hold array of streams
 let streams = [];
 
 
 function setup() {
-  createCanvas(
-    windowWidth,
-    windowHeight-4
-  );
+  createCanvas(windowWidth, windowHeight-4);
   background(0);
   let x = 0;
   for (let i = 0; i <= width / matrixSize; i++) {
     let stream = new Stream();
+    // randomize start
     stream.generateMatrices(x, random(-1000, 0));
     streams.push(stream);
-    x += matrixSize + 25;
+    // horizontal space between streams
+    x += matrixSize + 10;
   }
   textSize(matrixSize);
 }
 
 function draw() {
-  background(34, 35, 42);
+  // background color and blur
+  background(25, 200);
+  // calls the rendering
   streams.forEach(function(stream) {
     stream.render();
   });
@@ -37,8 +38,8 @@ function Matrix(x, y, speed, first) {
   // coordinates x and y to display characters
   this.x = x;
   this.y = y;
-  this.value;
   this.speed = speed;
+  // refresh rate of new characters
   this.switchInterval = round(random(10, 20));
   this.first = first;
 
@@ -47,7 +48,7 @@ function Matrix(x, y, speed, first) {
     if (frameCount % this.switchInterval == 0) {
       this.value = String.fromCharCode(
         // choose random Katakana from of total of 96
-        round(random(60, 96))
+        0x30A0 + round(random(0, 96))
       );
     }
   };
@@ -64,9 +65,10 @@ function Matrix(x, y, speed, first) {
 function Stream() {
   // array of streams
   this.Matrices = [];
-  // amount of different matrixs in a stream
-  this.totalMatrices = round(random(5, 30));
-  this.speed = random(3, 5);
+  // length of streams
+  this.totalMatrices = round(random(5, 20));
+  // speed (vertical movement)
+  this.speed = random(1, 3);
 
   this.generateMatrices = function(x, y) {
     // chance of light first character
@@ -76,7 +78,8 @@ function Stream() {
       matrix = new Matrix(x, y, this.speed, first);
       matrix.setToRandomMatrix();
       this.Matrices.push(matrix);
-      y -= matrixSize;
+      // space between characters
+      y -= matrixSize + 10;
       first = false;
     }
   };
