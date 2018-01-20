@@ -8,7 +8,7 @@ let matrixSize = 12;
 let streams = [];
 // variable for graphik
 let graphik;
-// iterate over index character
+// index character
 let index = 0;
 
 function preload() {
@@ -36,11 +36,13 @@ function setup() {
 function draw() {
   // background color and blur
   background(29, 29, 40, 200);
+  // iterate over index character
   // calls the rendering
   streams.forEach(function(stream) {
     stream.render();
   });
 }
+
 
 function Matrix(x, y, speed, first) {
   // coordinates x and y to display characters
@@ -50,12 +52,17 @@ function Matrix(x, y, speed, first) {
   // refresh rate of new characters
   this.switchInterval = round(random(10, 20));
   this.first = first;
+  this.index = 0;
   // function to generate random characters
   this.setToRandomMatrix = function() {
     if (frameCount % this.switchInterval == 0) {
-      let streamLetters = ['S', 'O', 'L', 'U', 'T', 'I', 'O', 'N', 'S', 'E', 'E', 'K', 'E', 'R'];
+      let streamLetters = ['S', 'O', 'L', 'U', 'T', 'I', 'O', 'N', ' ', 'S', 'E', 'E', 'K', 'E', 'R', ' '];
       // this.character = streamLetters;
-      this.character = random(streamLetters);
+      this.index += 1;
+      if (this.index > 15) {
+        this.index = 0;
+      }
+      this.character = streamLetters[this.index];
     }
   };
   // function to change y position of characters
@@ -69,9 +76,12 @@ function Stream() {
   // array of streams
   this.Matrices = [];
   // length of streams
-  this.totalMatrices = round(random(5, 20));
+  this.totalMatrices = round(random(5, 14));
   // speed (vertical movement)
   this.speed = random(1, 3);
+
+
+
   this.generateMatrices = function(x, y) {
     // chance of light first character
     let first = round(random(0, 4)) === 1;
