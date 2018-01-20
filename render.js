@@ -2,20 +2,29 @@
 // January 2018
 // jshint esversion: 6
 
-
 // set size of characters
-let matrixSize = 10;
+let matrixSize = 12;
 // hold array of streams
 let streams = [];
+// variable for graphik
+let graphik;
+// iterate over index character
+let index = 0;
 
+function preload() {
+  graphik = loadFont('Graphik-Regular.otf');
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight-4);
   background(0);
+  textFont(graphik);
+  // x set horizontal start of matrix
   let x = 0;
-  for (let i = 0; i <= width / matrixSize; i++) {
+  // generate amount of streams
+  for (let i = 0; i <= (width / matrixSize); i++) {
     let stream = new Stream();
-    // randomize start
+    // randomize start parameter
     stream.generateMatrices(x, random(-1000, 0));
     streams.push(stream);
     // horizontal space between streams
@@ -26,14 +35,13 @@ function setup() {
 
 function draw() {
   // background color and blur
-  background(25, 200);
+  background(29, 29, 40, 200);
   // calls the rendering
   streams.forEach(function(stream) {
     stream.render();
   });
 }
 
-// characters loaded
 function Matrix(x, y, speed, first) {
   // coordinates x and y to display characters
   this.x = x;
@@ -42,14 +50,12 @@ function Matrix(x, y, speed, first) {
   // refresh rate of new characters
   this.switchInterval = round(random(10, 20));
   this.first = first;
-
   // function to generate random characters
   this.setToRandomMatrix = function() {
     if (frameCount % this.switchInterval == 0) {
-      this.value = String.fromCharCode(
-        // choose random Katakana from of total of 96
-        0x30A0 + round(random(0, 96))
-      );
+      let streamLetters = ['S', 'O', 'L', 'U', 'T', 'I', 'O', 'N', 'S', 'E', 'E', 'K', 'E', 'R'];
+      // this.character = streamLetters;
+      this.character = random(streamLetters);
     }
   };
   // function to change y position of characters
@@ -59,9 +65,6 @@ function Matrix(x, y, speed, first) {
   };
 }
 
-
-
-
 function Stream() {
   // array of streams
   this.Matrices = [];
@@ -69,7 +72,6 @@ function Stream() {
   this.totalMatrices = round(random(5, 20));
   // speed (vertical movement)
   this.speed = random(1, 3);
-
   this.generateMatrices = function(x, y) {
     // chance of light first character
     let first = round(random(0, 4)) === 1;
@@ -79,7 +81,7 @@ function Stream() {
       matrix.setToRandomMatrix();
       this.Matrices.push(matrix);
       // space between characters
-      y -= matrixSize + 10;
+      y -= matrixSize + 14;
       first = false;
     }
   };
@@ -87,13 +89,13 @@ function Stream() {
     this.Matrices.forEach(function(matrix) {
       if (matrix.first) {
         // color for bright first color
-        fill(200);
+        fill(166, 255, 198);
       } else {
         // color of characters
-        fill(150);
+        fill(180);
       }
-      // function to randomly display characters from this.value at x and y coordinates
-      text(matrix.value, matrix.x, matrix.y);
+      // function to randomly display characters from this.character at x and y coordinates
+      text(matrix.character, matrix.x, matrix.y);
       // calls the rain function
       matrix.rain();
       matrix.setToRandomMatrix();
