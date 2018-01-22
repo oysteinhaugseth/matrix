@@ -10,7 +10,7 @@ let streamArray = [];
 let graphik;
 
 function preload() {
-  graphik = loadFont('Graphik-Regular.otf');
+  graphik = loadFont('Graphik-Semibold.otf');
 }
 
 function setup() {
@@ -18,7 +18,7 @@ function setup() {
   background(0);
   textFont(graphik);
   // x set horizontal start of matrix
-  let x = 0;
+  let x = 10;
   // generate amount of streamArray
   for (let i = 0; i <= (width / letterSize); i++) {
     let stream = new Stream();
@@ -54,7 +54,7 @@ function Matrix(x, y, speed, first) {
   // function to load letters
   this.setToStreamLetters = function() {
     if (frameCount % this.switchInterval == 0) {
-      let streamLetters = ['S', 'O', 'L', 'U', 'T', 'I', 'O', 'N', 'S', 'E', 'E', 'K', 'E', 'R', ' '];
+      let streamLetters = ['S', 'O', 'L', 'U', 'T', 'I', 'O', 'N', 'S', 'E', 'E', 'K', 'E', 'R'];
       // pull letters from array in sequence
       this.index += 1;
       if (this.index >= streamLetters.length) {
