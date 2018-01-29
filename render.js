@@ -1,9 +1,9 @@
 // Oystein Haugseth @ Neue
-// January 2018
+// Feb 2018
 // jshint esversion: 6
 
 // set size of characters
-let letterSize = 12;
+let letterSize = 11.5;
 // hold array of streamArray
 let streamArray = [];
 // variable for graphik
@@ -26,7 +26,7 @@ function setup() {
     stream.generateStreamArray(x, random(-1000, 0));
     streamArray.push(stream);
     // horizontal space between streamArray
-    x += letterSize + 10;
+    x += letterSize + 16;
   }
   textSize(letterSize);
 }
@@ -87,7 +87,7 @@ function Stream() {
       matrix.setToStreamLetters();
       this.streams.push(matrix);
       // space between characters
-      y -= letterSize + 14;
+      y -= letterSize + 16;
       first = false;
     }
   };
